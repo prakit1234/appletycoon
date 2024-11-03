@@ -1,0 +1,20 @@
+/* Achievement Pop-Up Styling */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 2px solid #333;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.popup.hidden {
+    display: none;
+}
+
+#close-popup {
+    margin-top: 10px;
+}
