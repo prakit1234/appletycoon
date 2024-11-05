@@ -31,9 +31,15 @@ function updateDisplay() {
 // Collect apples
 document.getElementById('collect-button').addEventListener('click', () => {
     if (appleCount < storageCapacity) {
-        appleCount += applesPerClick;
+        for (let i = 0; i < applesPerClick; i++) {
+            if (appleCount < storageCapacity) {
+                appleCount++;
+                showFloatingApple();
+            }
+        }
         updateDisplay();
         checkAchievements();
+        saveGame();
     } else {
         alert('Storage full! Upgrade your capacity.');
     }
@@ -47,6 +53,7 @@ document.getElementById('sell-button').addEventListener('click', () => {
         appleCount = 0;
         updateDisplay();
         checkAchievements();
+        saveGame();
     } else {
         alert('No apples to sell.');
     }
@@ -58,6 +65,7 @@ document.getElementById('upgrade-click').addEventListener('click', () => {
         money -= 50;
         applesPerClick += 1;
         updateDisplay();
+        saveGame();
     } else {
         alert('Not enough money for this upgrade.');
     }
@@ -69,6 +77,7 @@ document.getElementById('upgrade-profit').addEventListener('click', () => {
         money -= 100;
         profitPerApple += 0.1;
         updateDisplay();
+        saveGame();
     } else {
         alert('Not enough money for this upgrade.');
     }
@@ -80,6 +89,7 @@ document.getElementById('upgrade-storage').addEventListener('click', () => {
         money -= 200;
         storageCapacity += 50;
         updateDisplay();
+        saveGame();
     } else {
         alert('Not enough money for this upgrade.');
     }
@@ -92,6 +102,7 @@ document.getElementById('buy-house').addEventListener('click', () => {
         alert('You bought a house!');
         checkAchievements();
         updateDisplay();
+        saveGame();
     } else {
         alert('Not enough money to buy a house.');
     }
@@ -103,6 +114,7 @@ document.getElementById('buy-car').addEventListener('click', () => {
         alert('You bought a car!');
         checkAchievements();
         updateDisplay();
+        saveGame();
     } else {
         alert('Not enough money to buy a car.');
     }
@@ -114,12 +126,13 @@ document.getElementById('buy-crypto').addEventListener('click', () => {
         alert('You invested in cryptocurrency!');
         checkAchievements();
         updateDisplay();
+        saveGame();
     } else {
         alert('Not enough money to invest in cryptocurrency.');
     }
 });
 
-// Gambling logic
+// Trading logic
 document.getElementById('trade-button').addEventListener('click', () => {
     let amount = parseFloat(prompt("Enter the amount to trade:"));
     if (isNaN(amount) || amount <= 0) {
@@ -148,71 +161,89 @@ document.getElementById('trade-button').addEventListener('click', () => {
         updateDisplay();
         updateTradeHistory();
         checkAchievements();
+        saveGame();
     } else {
         alert("Not enough money to trade.");
     }
 });
 
 function updateTradeHistory() {
-    tradeResult.innerHTML = "<h3>Trade History</h3>";
-    tradeHistory.slice(-5).forEach(entry => {
-        const logEntry = document.createElement('div');
-        logEntry.textContent = entry;
-        tradeResult.appendChild(logEntry);
-    });
+     ```javascript
+    tradeResult.innerHTML = tradeHistory.map(entry => `<li>${entry}</li>`).join('');
 }
 
-// Check for achievements
+// Check achievements
 function checkAchievements() {
-    if (!achievements.firstApple && appleCount >= 1) {
+    if (appleCount === 1 && !achievements.firstApple) {
         achievements.firstApple = true;
-        addAchievement('First Apple Collected');
+        showAchievement("You collected your first apple!");
     }
-    if (!achievements.firstSell && money >= 10) {
+    if (money >= 100 && !achievements.firstSell) {
         achievements.firstSell = true;
-        addAchievement('First Sale Made');
+        showAchievement("You made your first sale!");
     }
-    if (!achievements.richInvestor && money >= 1000) {
+    if (money >= 1000 && !achievements.richInvestor) {
         achievements.richInvestor = true;
-        addAchievement('Rich Investor');
+        showAchievement("You are now a rich investor!");
     }
-    if (!achievements.trader && tradeHistory.length >= 1) {
+    if (tradeHistory.length > 0 && !achievements.trader) {
         achievements.trader = true;
-        addAchievement('First Trade Completed');
+        showAchievement("You are now a trader!");
     }
 }
 
-// Add achievements to the UI
-function addAchievement(description) {
-    const listItem = document.createElement('li');
-    listItem.textContent = description;
-    achievementsList.appendChild(listItem);
-}
-
-// Initial display update
-updateDisplay();
-
-
-// Pop-up element for achievements
-const achievementPopup = document.getElementById('achievement-popup');
-const achievementMessage = document.getElementById('achievement-message');
-const closePopupButton = document.getElementById('close-popup');
-
-// Show pop-up function
-function showAchievementPopup(message) {
+// Show achievement pop-up
+function showAchievement(message) {
+    const popup = document.getElementById('achievement-popup');
+    const achievementMessage = document.getElementById('achievement-message');
     achievementMessage.textContent = message;
-    achievementPopup.classList.remove('hidden');
+    popup.classList.remove('hidden');
 }
 
-// Close pop-up listener
-closePopupButton.addEventListener('click', () => {
-    achievementPopup.classList.add('hidden');
+// Close achievement pop-up
+document.getElementById('close-popup').addEventListener('click', () => {
+    document.getElementById('achievement-popup').classList.add('hidden');
 });
 
-// Modify `addAchievement` function to show the pop-up
-function addAchievement(description) {
-    const listItem = document.createElement('li');
-    listItem.textContent = description;
-    achievementsList.appendChild(listItem);
-    showAchievementPopup(`Achievement Unlocked: ${description}`);
+// Save game state
+function saveGame() {
+    const gameState = {
+        appleCount,
+        money,
+        applesPerClick,
+        profitPerApple,
+        storageCapacity,
+        achievements
+    };
+    localStorage.setItem('appleTycoonSave', JSON.stringify(gameState));
 }
+
+// Load game state
+function loadGame() {
+    const savedGame = localStorage.getItem('appleTycoonSave');
+    if (savedGame) {
+        const gameState = JSON.parse(savedGame);
+        appleCount = gameState.appleCount;
+        money = gameState.money;
+        applesPerClick = gameState.applesPerClick;
+        profitPerApple = gameState.profitPerApple;
+        storageCapacity = gameState.storageCapacity;
+        achievements = gameState.achievements;
+        updateDisplay();
+    }
+}
+
+// Show floating apple emoji
+function showFloatingApple() {
+    const apple = document.createElement('div');
+    apple.textContent = '🍎';
+    apple.className = 'floating-apple';
+    apple.style.left = `${Math.random() * 80 + 10}%`;
+    document.body.appendChild(apple);
+    setTimeout(() => {
+        apple.remove();
+    }, 1000);
+}
+
+// Load game on page load
+window.onload = loadGame;
