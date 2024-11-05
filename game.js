@@ -5,6 +5,7 @@ let applesPerClick = 1;
 let profitPerApple = 1;
 let storageCapacity = 50;
 let tradeHistory = [];
+let cryptoAmount = 0; // Amount of cryptocurrency
 let achievements = {
     firstApple: false,
     firstSell: false,
@@ -12,10 +13,17 @@ let achievements = {
     trader: false,
 };
 
+// Fruit prices
+const fruitPrices = {
+    orange: 2,
+    mango: 3,
+};
+
 // DOM elements
 const appleCountElement = document.getElementById('apple-count');
 const moneyCountElement = document.getElementById('money-count');
 const storageCapacityElement = document.getElementById('storage-capacity');
+const cryptoAmountElement = document.getElementById('crypto-amount');
 const achievementsList = document.getElementById('achievements-list');
 const tradeResult = document.getElementById('trade-result');
 
@@ -24,6 +32,7 @@ function updateDisplay() {
     appleCountElement.textContent = appleCount;
     moneyCountElement.textContent = money.toFixed(2);
     storageCapacityElement.textContent = storageCapacity;
+    cryptoAmountElement.textContent = cryptoAmount;
 }
 
 // Collect apples
@@ -92,6 +101,117 @@ document.getElementById('upgrade-storage').addEventListener('click', () => {
     }
 });
 
+// Buy House
+document.getElementById('buy-house').addEventListener('click', () => {
+    if (money >= 500) {
+        money -= 500;
+        alert('You bought a house!');
+        saveGame();
+        updateDisplay();
+    } else {
+        alert('Not enough money to buy a house.');
+    }
+});
+
+// Buy Car
+document.getElementById('buy-car').addEventListener('click', () => {
+    if (money >= 1000) {
+        money -= 1000;
+        alert('You bought a car!');
+        saveGame();
+        updateDisplay();
+    } else {
+        alert('Not enough money to buy a car.');
+    }
+});
+
+// Buy Cryptocurrency
+document.getElementById('buy-crypto').addEventListener('click', () => {
+    if (money >= 2000) {
+        cryptoAmount += 1; // Buy 1 unit of cryptocurrency
+        money -= 2000;
+        alert('You bought cryptocurrency!');
+        saveGame();
+        updateDisplay();
+    } else {
+        alert('Not enough money to buy cryptocurrency.');
+    }
+});
+
+// Trade apples for cryptocurrency
+document.getElementById('trade-button').addEventListener('click', () => {
+    if (appleCount > 0) {
+        const tradeValue = appleCount * profitPerApple * 1.1; // 10% profit
+        money += tradeValue;
+        cryptoAmount += 1; // Assume you get 1 crypto for trading apples
+        appleCount = 0; // All apples are traded
+        updateDisplay();
+        tradeResult.textContent = `Traded apples for $${tradeValue.toFixed(2)} and 1 cryptocurrency!`;
+        saveGame();
+    } else {
+        alert('No apples to trade.');
+    }
+});
+
+// Trade fruits like oranges and mangoes
+document.getElementById('trade-fruit').addEventListener('click', () => {
+    const fruitType = document.getElementById('fruit-select').value;
+    const fruitCount = parseInt(document.getElementById('fruit-count').value);
+    
+    if (fruitCount > 0 && fruitPrices[fruitType] !== undefined) {
+        const totalValue = fruitCount * fruitPrices[fruitType];
+        money += totalValue;
+        alert(`Traded ${fruitCount} ${fruitType}(s) for $${totalValue.toFixed(2)}!`);
+        updateDisplay();
+        saveGame();
+    } else {
+        alert('Invalid trade. Check your fruit count or type.');
+    }
+});
+
+// Gambling feature: Heads or Tails
+document.getElementById('gamble-coin').addEventListener('click', () => {
+    const betAmount = parseFloat(document.getElementById('gamble-amount').value);
+    const choice = document.querySelector('input[name="coin-choice"]:checked').value;
+
+    if (betAmount > 0 && betAmount <= money) {
+        const result = Math.random() < 0.5 ? 'heads' : 'tails';
+        if (result === choice) {
+            money += betAmount; // Win
+            alert(`You won! The result was ${result}. Your new balance is $${money.toFixed(2)}.`);
+        } else {
+            money -= betAmount; // Lose
+            alert(`You lost! The result was ${result}. Your new balance is $${money.toFixed(2)}.`);
+        }
+        updateDisplay();
+        saveGame();
+    } else {
+        alert('Invalid bet amount.');
+    }
+});
+
+// Gambling feature: GK Quiz
+document.getElementById('gamble-gk').addEventListener('click', () => {
+    const betAmount = parseFloat(document.getElementById('gk-bet-amount').value);
+    const question = "What is the capital of France?"; // Example question
+    const correctAnswer = "Paris"; // Example answer
+    const userAnswer = prompt(`${question} (Your answer: )`);
+
+    if (betAmount > 0 && betAmount <= money) {
+        if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+            money += betAmount * 2; // Win double the bet
+            alert(`Correct! You won! Your new balance is $${money.toFixed(2)}.`);
+        } else {
+            money -= betAmount; // Lose
+            alert(`Wrong answer! The correct answer was ${correctAnswer}. Your new balance is $${money.toFixed(2)}.`);
+        }
+        updateDisplay();
+        saveGame();
+    } else {
+        alert('Invalid bet amount.');
+    }
+});
+
 // Show floating apple animation
 function showFloatingApple() {
     const floatingApple = document.createElement('div');
@@ -146,10 +266,12 @@ function saveGame() {
         appleCount,
         money,
         applesPerClick,
+ ```javascript
         profitPerApple,
         storageCapacity,
         achievements,
-        tradeHistory
+        tradeHistory,
+        cryptoAmount
     };
     localStorage.setItem('appleTycoonGame', JSON.stringify(gameState));
 }
@@ -166,6 +288,7 @@ function loadGame() {
         storageCapacity = gameState.storageCapacity;
         achievements = gameState.achievements;
         tradeHistory = gameState.tradeHistory;
+        cryptoAmount = gameState.cryptoAmount;
         updateDisplay();
         updateAchievementsList();
     }
