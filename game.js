@@ -266,7 +266,6 @@ function saveGame() {
         appleCount,
         money,
         applesPerClick,
- ```javascript
         profitPerApple,
         storageCapacity,
         achievements,
