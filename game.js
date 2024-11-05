@@ -148,6 +148,7 @@ document.getElementById('trade-button').addEventListener('click', () => {
         updateDisplay();
         tradeResult.textContent = `Traded apples for $${tradeValue.toFixed(2)} and 1 cryptocurrency!`;
         saveGame();
+ ```javascript
     } else {
         alert('No apples to trade.');
     }
@@ -277,7 +278,8 @@ function saveGame() {
 
 // Load game state
 function loadGame() {
-    const savedGame = localStorage.getItem('appleTycoonGame');
+    const savedGame ```javascript
+    = localStorage.getItem('appleTycoonGame');
     if (savedGame) {
         const gameState = JSON.parse(savedGame);
         appleCount = gameState.appleCount;
