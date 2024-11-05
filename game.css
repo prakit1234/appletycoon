@@ -1,3 +1,116 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.game-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #4a4a4a;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-top: 30px;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#collect-button, #sell-button {
+    font-size: 1.2em;
+    padding: 12px 20px;
+    margin-top: 15px;
+}
+
+.shop-items {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.shop-items button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    height: 100px;
+    justify-content: center;
+    background-color: #3498db;
+}
+
+.shop-items button:hover {
+    background-color: #2980b9;
+}
+
+.shop-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 5px;
+}
+
+#achievements-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#achievements-list li {
+    background-color: #f9f9f9;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#trade-result {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
 /* Achievement Pop-Up Styling */
 .popup {
     position: fixed;
@@ -9,6 +122,8 @@
     padding: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     z-index: 1000;
+    border-radius: 10px;
+    text-align: center;
 }
 
 .popup.hidden {
@@ -17,4 +132,9 @@
 
 #close-popup {
     margin-top: 10px;
+    background-color: #e74c3c;
+}
+
+#close-popup:hover {
+    background-color: #c0392b;
 }
