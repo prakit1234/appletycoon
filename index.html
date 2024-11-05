@@ -2,12 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apple Tycoon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="game.css">
-    <link href="https://fonts.googleapis ```html
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="game-container">
@@ -19,6 +17,10 @@
         <div class="status">
             <span class="money-emoji">💰</span>
             Money: $<span id="money-count">0.00</span>
+        </div>
+        <div class="status">
+            <span class="crypto-emoji">💎</span>
+            Crypto: <span id="crypto-amount">0</span>
         </div>
         <p>Storage Capacity: <span id="storage-capacity">50</span></p>
         
@@ -44,8 +46,34 @@
         </div>
 
         <h2>Trade</h2>
-        <button id="trade-button">Start Trading</button>
+        <button id="trade-button">Trade Apples for Crypto</button>
         <div id="trade-result"></div>
+
+        <h2>Fruit Trade</h2>
+        <select id="fruit-select">
+            <option value="orange">Orange</option>
+            <option value="mango">Mango</option>
+        </select>
+        <input type="number" id="fruit-count" placeholder="Quantity">
+        <button id="trade-fruit">Trade Fruit</button>
+
+        <h2>Gambling</h2>
+        <div class="gambling-section">
+            <h3>Heads or Tails</h3>
+            <input type="number" id="gamble-amount" placeholder="Bet Amount">
+            <div class="coin-choice">
+                <input type="radio" id="heads" name="coin-choice" value="heads">
+                <label for="heads">Heads</label>
+                <input type="radio" id="tails" name="coin-choice" value="tails">
+                <label for="tails">Tails</label>
+            </div>
+            <button id="gamble-coin">Gamble</button>
+        </div>
+        <div class="gambling-section">
+            <h3>GK Quiz</h3>
+            <input type="number" id="gk-bet-amount" placeholder="Bet Amount">
+            <button id="gamble-gk">Start Quiz</button>
+        </div>
 
         <h2>Achievements</h2>
         <ul id="achievements-list"></ul>
