@@ -280,11 +280,10 @@ function saveGame() {
 function loadGame() {
     const savedState = localStorage.getItem('gameState');
     if (savedState) {
-        const gameState = JSON ```javascript
-        JSON.parse(savedState);
+        const gameState = JSON.parse(savedState);
         appleCount = gameState.appleCount;
         money = gameState.money;
-        applesPerClick = gameState.applesPerClick;
+        applesPerClick = gameState.apppleClick;
         profitPerApple = gameState.profitPerApple;
         storageCapacity = gameState.storageCapacity;
         cryptoAmount = gameState.cryptoAmount;
