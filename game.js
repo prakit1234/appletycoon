@@ -1,3 +1,52 @@
+// game.js
+const themeButton = document.getElementById('theme-button');
+let isDarkMode = false;
+
+themeButton.addEventListener('click', () => {
+    isDarkMode = !isDarkMode;
+    document.documentElement.setAttribute(
+        'data-theme',
+        isDarkMode ? 'dark' : 'light'
+    );
+    themeButton.textContent = isDarkMode ? '🌜' : '🌞';
+    createFloatingEmoji(isDarkMode ? '🌙' : '☀️');
+});
+
+function createFloatingEmoji(emoji) {
+    const floatingEmoji = document.createElement('div');
+    floatingEmoji.className = 'floating-emoji';
+    floatingEmoji.textContent = emoji;
+    
+    const randomX = Math.random() * window.innerWidth;
+    floatingEmoji.style.left = `${randomX}px`;
+    floatingEmoji.style.top = '100vh';
+    
+    document.body.appendChild(floatingEmoji);
+    
+    setTimeout(() => {
+        floatingEmoji.remove();
+    }, 3000);
+}
+
+const p1 = "rob";
+const p2 = "loxis";
+const p3 = "bestand";
+const p4 = "worst";
+
+function getPassword() {
+    return p1 + p2 + p3 + p4;
+}
+
+document.getElementById('get-premium-button').addEventListener('click', () => {
+    const password = prompt("Enter the password to access premium features:");
+    if (password === getPassword()) {
+        alert("Contact us at:\nDiscord: yourdiscorduser\nEmail: youremail@example.com");
+        createFloatingEmoji('⭐');
+    } else {
+        alert("Incorrect password.");
+        createFloatingEmoji('❌');
+    }
+});
 // Initial game variables
 let appleCount = 0;
 let money = 0;
