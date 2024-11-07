@@ -297,7 +297,7 @@ function loadGame() {
 elements.getPremiumButton.addEventListener('click', () => {
     const password = prompt("Enter the password to access premium features:");
     if (password === "robloxisbestandworst") {
-        alert("Contact us at:\nDiscord: yourdiscorduser\nEmail: youremail@example.com");
+        alert("Contact us at:\nDiscord: xtro_kai\nEmail: teamrebellion@proton.me");
     } else {
         alert("Incorrect password.");
     }
