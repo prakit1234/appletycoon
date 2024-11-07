@@ -1,9 +1,18 @@
-:root {
+/* game.css */
+:root[data-theme="light"] {
     --primary-color: #4CAF50;
     --secondary-color: #2196F3;
     --background-color: #f0f8ff;
     --text-color: #333;
     --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme="dark"] {
+    --primary-color: #45a049;
+    --secondary-color: #1976D2;
+    --background-color: #1a1a1a;
+    --text-color: #ffffff;
+    --box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
 }
 
 body {
@@ -13,7 +22,7 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 20px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .game-container {
@@ -23,7 +32,7 @@ body {
     padding: 30px;
     border-radius: 15px;
     box-shadow: var(--box-shadow);
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 h1, h2, h3 {
@@ -95,73 +104,66 @@ button:active {
 
 .shop-items button {
     width: 150px;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    height:  50px;
 }
 
-.shop-icon {
-    font-size: 24px;
-    margin-bottom: 5px;
-}
-
-#trade-result {
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-.gambling-section {
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 20px;
-}
-
-.coin-choice {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0;
-}
-
-.coin-choice label {
-    margin: 0 10px;
-}
-
-input[type="number"], select {
-    padding: 8px;
-    margin: 5px;
-    border: 1px solid # ccc;
-    border-radius: 5px;
-    width: 100px;
-}
-
-.popup {
+.theme-toggle {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: var(--box-shadow);
+    top: 20px;
+    right: 20px;
     z-index: 1000;
 }
 
-.hidden {
-    display: none;
-}
-
-#close-popup {
-    background-color: var(--secondary-color);
-    color: white;
-    border: none;
+#theme-button {
+    font-size: 24px;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
     cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-#close-popup:hover {
-    background-color: #1976D2;
+#theme-button:hover {
+    transform: rotate(360deg);
+}
+
+.floating-emoji {
+    position: fixed;
+    pointer-events: none;
+    animation: float 3s ease-out forwards;
+    font-size: 24px;
+    z-index: 1000;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+#get-premium-button {
+    background-color: #FFD700;
+    color: #333;
+    font-weight: bold;
+    padding: 15px 30px;
+    margin: 20px auto;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+#get-premium-button:hover {
+    background-color: #FFC600;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark mode transitions */
+body, .game-container, button {
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
