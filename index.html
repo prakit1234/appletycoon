@@ -1,5 +1,6 @@
+<!-- index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,9 @@
     <link rel="stylesheet" href="game.css">
 </head>
 <body>
+    <div class="theme-toggle">
+        <button id="theme-button">🌞</button>
+    </div>
     <div class="game-container">
         <h1>Apple Tycoon</h1>
         <div class="status">
@@ -75,6 +79,9 @@
             <button id="gamble-gk">Start Quiz</button>
         </div>
 
+        <h2>Premium Features</h2>
+        <button id="get-premium-button">Get Premium Access</button>
+
         <h2>Achievements</h2>
         <ul id="achievements-list"></ul>
     </div>
@@ -84,6 +91,8 @@
         <p id="achievement-message"></p>
         <button id="close-popup">Close</button>
     </div>
+
+    <div class="floating-emojis"></div>
 
     <script src="game.js"></script>
 </body>
